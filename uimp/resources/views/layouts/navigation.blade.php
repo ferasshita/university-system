@@ -15,6 +15,33 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.*')">
+                        {{ __('Faculties') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
+                        {{ __('Departments') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('campuses.index')" :active="request()->routeIs('campuses.*')">
+                        {{ __('Campuses') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('buildings.index')" :active="request()->routeIs('buildings.*')">
+                        {{ __('Buildings') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.*')">
+                        {{ __('Rooms') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.*')">
+                        {{ __('Employees') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.*')">
+                        {{ __('Students') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('subsystems.index')" :active="request()->routeIs('subsystems.*')">
+                        {{ __('Subsystems') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('audit-logs.index')" :active="request()->routeIs('audit-logs.*')">
+                        {{ __('Audit Logs') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +96,33 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.*')">
+                {{ __('Faculties') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
+                {{ __('Departments') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('campuses.index')" :active="request()->routeIs('campuses.*')">
+                {{ __('Campuses') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('buildings.index')" :active="request()->routeIs('buildings.*')">
+                {{ __('Buildings') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rooms.index')" :active="request()->routeIs('rooms.*')">
+                {{ __('Rooms') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.*')">
+                {{ __('Employees') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('students.index')" :active="request()->routeIs('students.*')">
+                {{ __('Students') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('subsystems.index')" :active="request()->routeIs('subsystems.*')">
+                {{ __('Subsystems') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('audit-logs.index')" :active="request()->routeIs('audit-logs.*')">
+                {{ __('Audit Logs') }}
             </x-responsive-nav-link>
         </div>
 

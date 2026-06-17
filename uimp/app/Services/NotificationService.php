@@ -2,39 +2,52 @@
 
 namespace App\Services;
 
-use Illuminate\Notifications\ChannelManager;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Collection;
+use App\Models\NotificationHistory;
+use App\Models\NotificationTemplate;
+use App\Models\User;
 
 class NotificationService
 {
-    /**
-     * @var \Illuminate\Notifications\ChannelManager
-     */
-    protected ChannelManager $channels;
+    public function sendFromTemplate(
+        User $user,
+        string $templateSlug,
+        array $placeholders = [],
+        ?string $channel = null
+    ): NotificationHistory {
+        $template = NotificationTemplate::query()
+            ->where('slug', $templateSlug)
+            ->where('is_active', true)
+            ->firstOrFail();
 
-    public function __construct(ChannelManager $channels)
-    {
-        $this->channels = $channels;
+        $channel = $channel ?? $template->channel;
+        $locale = app()->getLocale();
+
+        $subject = $this->renderTemplate(
+            $template->subject[$locale] ?? $template->subject['en'] ?? '',
+            $placeholders
+        );
+        $body = $this->renderTemplate(
+            $template->body[$locale] ?? $template->body['en'] ?? '',
+            $placeholders
+        );
+
+        return NotificationHistory::create([
+            'user_id' => $user->id,
+            'template_id' => $template->id,
+            'channel' => $channel,
+            'subject' => $subject,
+            'body' => $body,
+            'sent_at' => now(),
+            'status' => 'sent',
+        ]);
     }
 
-    /**
-     * Send a notification (or many) to one or many notifiable entities.
-     *
-     * @param  \Illuminate\Support\Collection|\Illuminate\Database\Eloquent\Model|array  $notifiables
-     * @param  \Illuminate\Notifications\Notification  $notification
-     * @return void
-     */
-    public function send(array|object $notifiables, Notification $notification): void
+    private function renderTemplate(string $template, array $placeholders): string
     {
-        $this->channels->send($notifiables, $notification);
-    }
+        foreach ($placeholders as $key => $value) {
+            $template = str_replace('{{'.$key.'}}', (string) $value, $template);
+        }
 
-    /**
-     * Convenience method for sending immediately to a single notifiable.
-     */
-    public function sendTo($notifiable, Notification $notification): void
-    {
-        $this->channels->send($notifiable, $notification);
+        return $template;
     }
 }

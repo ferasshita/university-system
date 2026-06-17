@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->text('description')->nullable();
-            $table->uuid('dean_user_id')->nullable()->comment('User ID of the dean');
+            $table->foreignUuid('dean_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
 

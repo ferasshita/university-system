@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\NotificationHistoryResource;
 use App\Models\NotificationHistory;
+use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,14 +39,17 @@ class NotificationController extends Controller
             'channel' => 'nullable|string|in:email,in_app,sms',
         ]);
 
-        $user = User::find($request->user_id);
-        $this->notificationService->send(
+        $user = User::findOrFail($request->user_id);
+        $history = $this->notificationService->sendFromTemplate(
             $user,
             $request->template_slug,
             $request->placeholders ?? [],
             $request->channel
         );
 
-        return response()->json(['message' => 'Notification sent (queued).']);
+        return response()->json([
+            'message' => 'Notification sent.',
+            'notification' => new NotificationHistoryResource($history),
+        ]);
     }
 }

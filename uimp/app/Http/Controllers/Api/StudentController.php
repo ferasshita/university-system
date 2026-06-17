@@ -14,11 +14,6 @@ use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Student::class, 'student');
-    }
-
     public function index(Request $request)
     {
         $query = Student::with(['user', 'department']);
